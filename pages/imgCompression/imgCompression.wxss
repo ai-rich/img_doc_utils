@@ -1,0 +1,105 @@
+/* pages/imgCompression/imgCompression.wxss */
+/* index.wxss */
+page {
+  background-color: #eee; /* 这里设置为需要的颜色 */
+}
+.upload-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 24rpx auto 0;
+  width: 92%;
+  height: 400rpx;
+  font-size: 28rpx;
+  padding-top: 50rpx;
+}
+
+.choose-image-tips{
+  margin-top: 20rpx;
+  font-size: 32rpx;
+}
+
+.change-size-container{
+  width: 92%;
+  margin: 30rpx auto;
+  padding: 20rpx 40rpx 20rpx 20rpx;
+  font-size: 28rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+}
+
+.custom-button{
+  background-color: #4fc08d;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 20rpx;
+  padding: 4rpx 10rpx;
+  width: 80rpx;
+  text-align: center;
+}
+
+.button-container{
+  text-align: center;
+  margin: 40rpx 0;
+}
+
+.button-group{
+  text-align: right;
+  margin: 10rpx;
+}
+
+.tips{
+  margin-top: 20rpx;
+  width: 92%;
+  margin: 20rpx auto;
+  font-size: 28rpx;
+  color: rgb(241, 109, 109);
+}
+
+.img-info-container{
+  width: 92%;
+  margin: 0 auto;
+  background-color: rgb(146, 144, 144);
+  color: #fff;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx 16rpx;
+  box-sizing: border-box;
+}
+
+
+.img-info{
+  display: flex;
+  margin-top: 10rpx;
+}
+
+.img-info >view{
+  flex: 1;
+}
+
+.change-size-row{
+  display: flex;
+  height: 100rpx;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+}
+
+.change-size-label{
+  width: 150rpx;
+}
+
+van-slider{
+  flex: 1;
+}
+
+.custom-button{
+  background-color: #ee0a24;
+  width: 40rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  border-radius: 20rpx;
+}

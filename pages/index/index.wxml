@@ -1,0 +1,10 @@
+<!--index.wxml-->
+<navigation-bar title="图片文档工具" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <van-row>
+    <van-col span="8" bind:tap="goNextPage"  data-url="/pages/imgCompression/imgCompression">
+      <image style="width: 120rpx;height: 100rpx;" src="/assets/img/compress-image.png"></image>
+      <text>图片压缩</text>
+    </van-col>
+  </van-row>
+</scroll-view>
