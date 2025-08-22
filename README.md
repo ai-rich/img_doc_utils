@@ -4,4 +4,4 @@
 <img src="./doc/img/qrcode.png">
 
 ## 图片压缩
-<img src="./doc/img/imgCompression.jpg">
+<img width="200px" src="./doc/img/imgCompression.jpg">
