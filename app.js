@@ -1,19 +1,36 @@
 // app.js
 App({
+  url:"https://api.aitgc.cn/api",
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
+    console.log(1)
     // 登录
     wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-  },
-  globalData: {
-    userInfo: null
+      success: (res) => {
+        console.log(res)
+        // 通过code换取openid
+        if (res.code) {
+          wx.request({
+              url: `${this.url}/weixin/login`,
+              method: "post",
+              data: {
+                  code: res.code,
+              },
+              success: (res) => {
+                console.log(res.data)
+                  if (res.data && res.data.openid) {
+                      // 获取的openid存入storage，方便之后使用
+                      wx.setStorageSync("openid", res.data.openid);
+                  }
+              },
+          });
+        }
+      },
+      fail: (e) => {
+        console.log(e)
+      },
+      complete: () => {
+        console.log(2)
+      },
+    });
   }
 })

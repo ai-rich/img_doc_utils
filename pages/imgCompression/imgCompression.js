@@ -1,4 +1,5 @@
 import Toast from '@vant/weapp/toast/toast';
+import request, { uploadFile } from '../../utils/request';
 // pages/imgCompression/imgCompression.js
 Page({
 
@@ -94,26 +95,62 @@ Page({
       camera: 'back',
       success(res) {
         const imgUrl = res.tempFiles[0].tempFilePath;
-        const fileSize = parseInt(res.tempFiles[0].size/1024);
-        wx.getImageInfo({
-          src: imgUrl, // 这里替换为你要获取尺寸的图片的 URL
-          success(res) {
-            self.setData({
-              compressedHeight: res.height * sizeValue/100,
-              compressedWidth: res.width,
-              compressedFileSize: parseInt(fileSize * Math.min(qualityValue/100,sizeValue/100)).toFixed(0),
-              curHeight: res.height,
-              curWidth:  res.width,
-              curFileSize: fileSize
-            })
+
+        // 可以将文件路径 file.path 进行后续操作，如上传到服务器或本地处理
+        uploadFile({
+          url: `/weixin/upload`, // 替换为你的服务器上传地址
+          filePath: imgUrl,
+          name: 'file',
+          method: "post",
+          success: async (resUpload)=> {
+            const data = resUpload.data.data;
+            // 处理上传成功的结果
+            console.log(data);
+            request({
+              url: '/weixin/mediaCheckAsync',
+              method: "post",
+              data:{
+                openid: wx.getStorageSync("openid"),
+                filename: data.filename
+              },
+              success:(resCheck)=>{
+                if(resCheck.data.data && resCheck.data.data.result.suggest == 'pass'){
+                  const fileSize = parseInt(res.tempFiles[0].size/1024);
+                  wx.getImageInfo({
+                    src: imgUrl, // 这里替换为你要获取尺寸的图片的 URL
+                    success(res) {
+                      self.setData({
+                        compressedHeight: res.height * sizeValue/100,
+                        compressedWidth: res.width,
+                        compressedFileSize: parseInt(fileSize * Math.min(qualityValue/100,sizeValue/100)).toFixed(0),
+                        curHeight: res.height,
+                        curWidth:  res.width,
+                        curFileSize: fileSize
+                      })
+                    },
+                    fail(err) {
+                      console.error('获取图片信息失败', err);
+                    }
+                  });
+                 self.setData({
+                   imgUrl
+                 })
+                }else{
+                  self.setData({
+                    imgUrl: null
+                  })
+                  Toast.fail('图片验证失败，请重新选择！');
+                }
+              }
+            });
           },
-          fail(err) {
-            console.error('获取图片信息失败', err);
+          fail(res) {
+            // 处理上传失败的情况
+            console.error(res);
           }
-        });
-       self.setData({
-         imgUrl
-       })
+        })
+
+        
       }
     })
   },
