@@ -6,4 +6,4 @@
 ## 图片压缩
 <img width="300px" src="./doc/img/imgCompression.jpg">
 <img width="300px" src="./doc/img/pingtu.jpg">
-<img width="300px" src="./doc/img/wartermark.jpg">
+<img width="300px" src="./doc/img/watermark.jpg">
