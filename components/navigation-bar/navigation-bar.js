@@ -16,7 +16,7 @@ Component({
     },
     background: {
       type: String,
-      value: ''
+      value: '#d4237a'
     },
     color: {
       type: String,

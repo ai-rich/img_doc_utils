@@ -1,0 +1,86 @@
+
+<view class="container">
+  <navigation-bar title="{{type === 'vertical' ? '纵向拼接' : type === 'horizontal' ? '横向拼接' : '九宫格拼接'}}" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+  <view class="header">
+    <view class="tips">
+      {{type === 'vertical' ? '图片将上下拼接，适合制作长图' : 
+        type === 'horizontal' ? '图片将左右拼接，适合对比展示' : 
+        '图片将按3x3网格排列'}}
+    </view>
+  </view>
+
+  <view class="image-container">
+    <view class="image-list">
+      <view class="image-item" wx:for="{{images}}" wx:key="index" bindlongpress="removeImage" data-index="{{index}}">
+        <image src="{{item}}" mode="aspectFill" class="img"></image>
+        <view class="remove-btn">×</view>
+      </view>
+      
+      <view class="add-btn" bindtap="chooseImage" wx:if="{{images.length < maxCount}}">
+        <text class="add-icon">+</text>
+        <text class="add-text">添加图片</text>
+      </view>
+    </view>
+    
+    <view class="count-info" wx:if="{{images.length > 0}}">
+      已选择 {{images.length}}/{{maxCount}} 张图片
+    </view>
+  </view>
+
+  <view class="settings" wx:if="{{type !== 'grid'}}">
+    <view class="setting-item">
+      <text class="setting-label">拼接间距</text>
+      <view class="setting-value">
+        <slider 
+          min="0" 
+          max="50" 
+          step="1" 
+          value="{{spacing}}" 
+          bindchange="setSpacing"
+          show-value
+        ></slider>
+      </view>
+    </view>
+    
+    <view class="setting-item">
+      <text class="setting-label">背景颜色</text>
+      <view class="setting-value">
+        <view class="color-options">
+          <view 
+            class="color-option {{bgColor === '#ffffff' ? 'selected' : ''}}" 
+            style="background-color: #ffffff; border: 1px solid #ddd;"
+            bindtap="setBgColor" 
+            data-color="#ffffff"
+          ></view>
+          <view 
+            class="color-option {{bgColor === '#f5f5f5' ? 'selected' : ''}}" 
+            style="background-color: #f5f5f5;"
+            bindtap="setBgColor" 
+            data-color="#f5f5f5"
+          ></view>
+          <view 
+            class="color-option {{bgColor === '#000000' ? 'selected' : ''}}" 
+            style="background-color: #000000;"
+            bindtap="setBgColor" 
+            data-color="#000000"
+          ></view>
+          <view 
+            class="color-option custom-color {{bgColor && bgColor !== '#ffffff' && bgColor !== '#f5f5f5' && bgColor !== '#000000' ? 'selected' : ''}}" 
+            style="background-color: {{bgColor}};"
+            bindtap="openColorPicker"
+          ></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button 
+    class="stitch-btn" 
+    bindtap="stitchImages" 
+    disabled="{{images.length < 2}}"
+  >
+    开始拼接
+  </button>
+</view>
+<van-toast id="van-toast" />
+<canvas type="2d" id="stitchCanvas"></canvas>

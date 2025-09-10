@@ -1,5 +1,6 @@
 import Toast from '@vant/weapp/toast/toast';
 import request, { uploadFile } from '../../utils/request';
+const app = getApp();
 // pages/imgCompression/imgCompression.js
 Page({
 
@@ -98,7 +99,7 @@ Page({
 
         // 可以将文件路径 file.path 进行后续操作，如上传到服务器或本地处理
         uploadFile({
-          url: `/weixin/upload`, // 替换为你的服务器上传地址
+          url: app.uploadUrl, // 替换为你的服务器上传地址
           filePath: imgUrl,
           name: 'file',
           method: "post",
@@ -107,14 +108,14 @@ Page({
             // 处理上传成功的结果
             console.log(data);
             request({
-              url: '/weixin/mediaCheckAsync',
+              url: app.mediaCheckUrl,
               method: "post",
               data:{
                 openid: wx.getStorageSync("openid"),
                 filename: data.filename
               },
               success:(resCheck)=>{
-                if(resCheck.data.data && resCheck.data.data.result.suggest == 'pass'){
+                if(resCheck.data.data && resCheck.data.data.result.suggest != 'risky'){
                   const fileSize = parseInt(res.tempFiles[0].size/1024);
                   wx.getImageInfo({
                     src: imgUrl, // 这里替换为你要获取尺寸的图片的 URL
@@ -149,8 +150,6 @@ Page({
             console.error(res);
           }
         })
-
-        
       }
     })
   },

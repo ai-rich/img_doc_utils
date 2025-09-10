@@ -1,16 +1,21 @@
 <!--index.wxml-->
-<navigation-bar title="图片文档工具" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="二狗拼图改图" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 
-<scroll-view class="scrollarea" scroll-y type="list">
+<scroll-view class="container" scroll-y type="list">
   <van-row style="padding-top: 20rpx;">
     <van-col span="8" bind:tap="goNextPage"  data-url="/pages/imgCompression/imgCompression">
       <image style="width: 120rpx;height: 100rpx;" src="/assets/img/compress-image.png"></image>
       <text>图片压缩</text>
     </van-col>
 
-    <van-col span="8" bind:tap="goNextPage"  data-url="/pages/imgCompression/imgCompression">
+    <van-col span="8" bind:tap="goNextPage"  data-url="/pages/pingtu/pingtu">
       <image style="width: 100rpx;height: 100rpx;" src="/assets/img/pingtu.png"></image>
       <text>多图拼接</text>
+    </van-col>
+
+    <van-col span="8" bind:tap="goNextPage"  data-url="/pages/watermark/watermark">
+      <image style="width: 100rpx;height: 100rpx;" src="/assets/img/yin.png"></image>
+      <text>加水印</text>
     </van-col>
   </van-row>
 </scroll-view>

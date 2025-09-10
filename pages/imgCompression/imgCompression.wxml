@@ -1,6 +1,5 @@
 <navigation-bar title="图片压缩" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 <view class="page">
-  <view class="tips">压缩在微信本地完成，您的图片不会被泄露</view>
   <!-- 页面顶部标题栏 -->
   <header nav="false" title="{{title}}"></header>
   <view class="upload-container">

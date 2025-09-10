@@ -1,0 +1,113 @@
+<view class="container">
+  <navigation-bar title="图片加水印" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+  <!-- 图片选择区域 -->
+  <view class="upload-section">
+    <view class="upload-area" bindtap="chooseImage" wx:if="{{!originalImageUrl}}">
+      <view class="upload-icon">
+        <image src="/assets/img/img-select.png" mode="widthFix"></image>
+      </view>
+      <view class="upload-text">点击上传图片</view>
+    </view>
+
+    <!-- 图片预览区域 -->
+    <view class="preview-container" wx:if="{{originalImageUrl}}">
+      <!-- <view class="preview-title">原图</view>
+      <view class="image-preview">
+        <image src="{{originalImageUrl}}" mode="widthFix"></image>
+      </view> -->
+
+      <view class="preview-title">水印效果预览</view>
+      <view class="image-preview watermarked" wx:if="{{watermarkedImageUrl}}">
+        <image src="{{watermarkedImageUrl}}" mode="widthFix"></image>
+      </view>
+
+    </view>
+
+    <view style="padding-bottom: 120rpx;" class="settings-section" wx:if="{{originalImageUrl}}">
+      <view class="section-title">水印设置</view>
+
+      <!-- 水印文本 -->
+      <view class="setting-item">
+        <view class="setting-label">水印文字</view>
+        <input class="setting-input" type="text" placeholder="请输入水印文字" value="{{watermarkText}}" bindinput="onTextChange"></input>
+      </view>
+
+      <!-- 字体大小 -->
+      <view class="setting-item">
+        <view class="setting-label">字体大小</view>
+        <view class="slider-container">
+          <slider min="12" max="48" step="1" value="{{fontSize}}" bindchange="onFontSizeChange"></slider>
+          <view class="slider-value">{{fontSize}}px</view>
+        </view>
+      </view>
+
+      <!-- 透明度 -->
+      <view class="setting-item">
+        <view class="setting-label">透明度</view>
+        <view class="slider-container">
+          <slider min="10" max="100" step="5" value="{{opacity}}" bindchange="onOpacityChange"></slider>
+          <view class="slider-value">{{opacity}}%</view>
+        </view>
+      </view>
+
+      <!-- 旋转角度 -->
+      <view class="setting-item">
+        <view class="setting-label">旋转角度</view>
+        <view class="slider-container">
+          <slider min="0" max="360" step="1" value="{{rotate}}" bindchange="onRotateChange"></slider>
+          <view class="slider-value">{{rotate}}°</view>
+        </view>
+      </view>
+
+      <!-- 水印颜色 -->
+      <view class="setting-item">
+        <view class="setting-label">水印颜色</view>
+        <view class="color-options">
+          <view class="color-option {{color === '#000000' ? 'active' : ''}}" style="background-color: #000000;" bindtap="onColorChange" data-color="#000000"></view>
+          <view class="color-option {{color === '#FFFFFF' ? 'active' : ''}}" style="background-color: #FFFFFF; border: 1px solid #eee;" bindtap="onColorChange" data-color="#FFFFFF"></view>
+          <view class="color-option {{color === '#ee0a24' ? 'active' : ''}}" style="background-color: #ee0a24;" bindtap="onColorChange" data-color="#ee0a24"></view>
+          <view class="color-option {{color === '#ff976a' ? 'active' : ''}}" style="background-color: #ff976a;" bindtap="onColorChange" data-color="#ff976a"></view>
+          <view class="color-option {{color === '#1989fa' ? 'active' : ''}}" style="background-color: #1989fa;" bindtap="onColorChange" data-color="#1989fa"></view>
+          <view class="color-option {{color === '#07c160' ? 'active' : ''}}" style="background-color: #07c160;" bindtap="onColorChange" data-color="#07c160"></view>
+          <view class="color-option {{color === '#FFFF00' ? 'active' : ''}}" style="background-color: #FFFF00;" bindtap="onColorChange" data-color="#FFFF00"></view>
+          <view class="color-option {{color === '#d4237a' ? 'active' : ''}}" style="background-color: #d4237a;" bindtap="onColorChange" data-color="#d4237a"></view>
+        </view>
+      </view>
+
+      <!-- 水印密度 -->
+      <view class="setting-item">
+        <view class="setting-label">水印密度</view>
+        <view class="density-options">
+          <view class="density-option {{density === 'low' ? 'active' : ''}}" bindtap="onDensityChange" data-density="low">
+            稀疏
+          </view>
+          <view class="density-option {{density === 'medium' ? 'active' : ''}}" bindtap="onDensityChange" data-density="medium">
+            适中
+          </view>
+          <view class="density-option {{density === 'high' ? 'active' : ''}}" bindtap="onDensityChange" data-density="high">
+            密集
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+
+
+
+  <!-- 操作提示 -->
+  <view class="toast" wx:if="{{showToast}}">
+    {{toastMessage}}
+  </view>
+
+  <view style="text-align: right;padding: 20rpx;position: fixed;bottom: 0;width: 100%;background-color: #fff;z-index: 9;box-sizing: border-box;">
+    <van-button bind:click="chooseImage" size="small" type="info">选择图片</van-button>
+
+    <van-button style="margin-left: 20rpx;"  bind:click="generateWatermark" size="small" type="primary">生成水印</van-button>
+
+    <van-button style="margin-left: 20rpx;" size="small" bind:click="saveImage" color="#d4237a">保存图片</van-button>
+  </view>
+</view>
+<van-toast id="van-toast" />
+<canvas type="2d" id="watermarkCanvas" style="display: none;"></canvas>

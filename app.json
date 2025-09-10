@@ -1,7 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/imgCompression/imgCompression"
+    "pages/imgCompression/imgCompression",
+    "pages/pingtu/pingtu",
+    "pages/pingtuStitch/pingtuStitch",
+    "pages/imgResult/imgResult",
+    "pages/watermark/watermark"
   ],
   "window": {
     "navigationBarTextStyle": "black",

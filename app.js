@@ -1,8 +1,15 @@
 // app.js
 App({
+  // 接口地址前缀
   url:"https://api.aitgc.cn/api",
+  // 登录接口地址，获取openid
+  loginUrl: "/weixin/login",
+  // 上传接口
+  uploadUrl: "/weixin/upload",
+  // 图片检测接口
+  mediaCheckUrl: '/weixin/mediaCheckAsync',
+
   onLaunch() {
-    console.log(1)
     // 登录
     wx.login({
       success: (res) => {
@@ -10,7 +17,7 @@ App({
         // 通过code换取openid
         if (res.code) {
           wx.request({
-              url: `${this.url}/weixin/login`,
+              url: `${this.url}${this.loginUrl}`,
               method: "post",
               data: {
                   code: res.code,

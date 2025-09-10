@@ -1,0 +1,32 @@
+<navigation-bar title="拼接结果" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<view class="container">
+  <view class="tool-bar">
+    <button class="tool-btn" bindtap="saveImage">
+      <image src="/assets/img/save.png" class="tool-icon"></image>
+      <text class="tool-text">保存图片</text>
+    </button>
+    <button class="tool-btn" bindtap="shareImage">
+      <image src="/assets/img/share.png" class="tool-icon"></image>
+      <text class="tool-text">分享</text>
+    </button>
+    <button class="tool-btn" bindtap="newStitch">
+      <image src="/assets/img/new.png" class="tool-icon"></image>
+      <text class="tool-text">重新拼接</text>
+    </button>
+  </view>
+
+  <scroll-view class="image-container" scroll-x scroll-y>
+    <image 
+      src="{{imagePath}}" 
+      mode="widthFix" 
+      class="result-image"
+      bindload="imageLoaded"
+    ></image>
+  </scroll-view>
+
+  <canvas 
+    type="2d" 
+    id="stitchCanvas" 
+    style="width: 0; height: 0; position: absolute; left: -1000rpx;"
+  ></canvas>
+</view>
